@@ -52,3 +52,4 @@ class RankManager {
         $this->plugin->getConfig()->save();
     }
 }
+
