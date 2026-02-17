@@ -1,0 +1,19 @@
+name: CityBuildPlugin
+main: CityBuildPlugin\Main
+version: 1.0.0
+api: 5.0.0
+author: DeinName
+commands:
+  plot:
+    description: Manage plots
+    usage: /plot <claim|tp|delete>
+  spawn:
+    description: Teleport to spawn
+    usage: /spawn
+  rank:
+    description: Manage ranks
+    usage: /rank <add|remove|setperm|list>
+permissions:
+  citybuild.rank:
+    description: Access to rank management commands
+    default: op

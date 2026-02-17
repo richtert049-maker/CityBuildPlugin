@@ -1,0 +1,54 @@
+<?php
+namespace CityBuildPlugin;
+
+use pocketmine\player\Player;
+use pocketmine\plugin\PluginBase;
+
+class RankManager {
+    private PluginBase $plugin;
+    private array $ranks;
+
+    public function __construct(PluginBase $plugin){
+        $this->plugin = $plugin;
+        $this->ranks = $this->plugin->getConfig()->get("ranks", []);
+    }
+
+    public function addRank(string $name, string $prefix="§7", array $perms=[]): bool {
+        if(isset($this->ranks[$name])) return false;
+        $this->ranks[$name] = ['prefix'=>$prefix,'perms'=>$perms];
+        $this->save();
+        return true;
+    }
+
+    public function removeRank(string $name): bool {
+        if(!isset($this->ranks[$name])) return false;
+        unset($this->ranks[$name]);
+        $this->save();
+        return true;
+    }
+
+    public function setPerm(string $name, array $perms): bool {
+        if(!isset($this->ranks[$name])) return false;
+        $this->ranks[$name]['perms']=$perms;
+        $this->save();
+        return true;
+    }
+
+    public function getPrefix(string $name): string {
+        return $this->ranks[$name]['prefix'] ?? "§7";
+    }
+
+    public function hasPerm(Player $player, string $perm): bool {
+        foreach($this->ranks as $rankName => $data){
+            if($player->hasPermission("citybuild.rank.$rankName") && in_array($perm,$data['perms'])) return true;
+        }
+        return false;
+    }
+
+    public function getAllRanks(): array { return $this->ranks; }
+
+    private function save(): void {
+        $this->plugin->getConfig()->set("ranks",$this->ranks);
+        $this->plugin->getConfig()->save();
+    }
+}
