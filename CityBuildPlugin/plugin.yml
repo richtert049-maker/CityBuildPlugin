@@ -17,3 +17,4 @@ permissions:
   citybuild.rank:
     description: Access to rank management commands
     default: op
+
