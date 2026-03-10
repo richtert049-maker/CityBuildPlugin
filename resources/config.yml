@@ -1,0 +1,7 @@
+plot_world: plotwelt
+plot_world_size: 2500
+plot_size: 25
+spawn:
+  x: 0
+  y: 100
+  z: 0
